@@ -4,6 +4,29 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 
+// Import portfolio images
+import ecommercePlatform from "@/assets/portfolio/ecommerce-platform.jpg";
+import restaurantSystem from "@/assets/portfolio/restaurant-system.jpg";
+import fitnessApp from "@/assets/portfolio/fitness-app.jpg";
+import corporateBranding from "@/assets/portfolio/corporate-branding.jpg";
+import realEstateWebsite from "@/assets/portfolio/real-estate-website.jpg";
+import schoolSystem from "@/assets/portfolio/school-system.jpg";
+import deliveryApp from "@/assets/portfolio/delivery-app.jpg";
+import techStartupBranding from "@/assets/portfolio/tech-startup-branding.jpg";
+import portfolioWebsite from "@/assets/portfolio/portfolio-website.jpg";
+
+const imageMap: Record<string, string> = {
+  "/src/assets/portfolio/ecommerce-platform.jpg": ecommercePlatform,
+  "/src/assets/portfolio/restaurant-system.jpg": restaurantSystem,
+  "/src/assets/portfolio/fitness-app.jpg": fitnessApp,
+  "/src/assets/portfolio/corporate-branding.jpg": corporateBranding,
+  "/src/assets/portfolio/real-estate-website.jpg": realEstateWebsite,
+  "/src/assets/portfolio/school-system.jpg": schoolSystem,
+  "/src/assets/portfolio/delivery-app.jpg": deliveryApp,
+  "/src/assets/portfolio/tech-startup-branding.jpg": techStartupBranding,
+  "/src/assets/portfolio/portfolio-website.jpg": portfolioWebsite,
+};
+
 interface Project {
   id: string;
   title: string;
@@ -102,7 +125,7 @@ const Portfolio = () => {
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <PortfolioCard 
-                  image={project.image_url || "/placeholder.svg"}
+                  image={project.image_url ? (imageMap[project.image_url] || project.image_url) : "/placeholder.svg"}
                   title={project.title}
                   description={project.description}
                   technologies={project.technologies}
