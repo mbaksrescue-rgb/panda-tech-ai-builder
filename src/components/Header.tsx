@@ -36,9 +36,10 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Panda<span className="text-secondary">Tech</span>
+          <Link to="/" className="flex items-center gap-2 group perspective">
+            <div className="text-3xl font-bold text-shadow-3d transform hover:scale-105 transition-transform duration-300">
+              <span className="bg-gradient-primary bg-clip-text text-transparent">Panda</span>
+              <span className="bg-gradient-secondary bg-clip-text text-transparent">Tech</span>
             </div>
           </Link>
 
@@ -48,31 +49,31 @@ const Header = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors relative ${
+                className={`text-sm font-bold uppercase tracking-wider transition-all duration-300 relative perspective ${
                   location.pathname === link.path
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                    ? "text-primary text-shadow-3d scale-110"
+                    : "text-foreground/80 hover:text-primary hover:text-shadow-3d hover:scale-105"
                 }`}
               >
                 {link.name}
                 {location.pathname === link.path && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-primary rounded-full" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-primary rounded-full shadow-glow" />
                 )}
               </Link>
             ))}
             {isAdmin && (
               <Link
                 to="/admin"
-                className={`text-sm font-medium transition-colors relative flex items-center gap-1 ${
+                className={`text-sm font-bold uppercase tracking-wider transition-all duration-300 relative flex items-center gap-1 perspective ${
                   location.pathname === "/admin"
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                    ? "text-primary text-shadow-3d scale-110"
+                    : "text-foreground/80 hover:text-primary hover:text-shadow-3d hover:scale-105"
                 }`}
               >
                 <Shield size={16} />
                 Admin
                 {location.pathname === "/admin" && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-primary rounded-full" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-primary rounded-full shadow-glow" />
                 )}
               </Link>
             )}
@@ -117,10 +118,10 @@ const Header = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`block py-2 text-sm font-medium ${
+                className={`block py-3 text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                   location.pathname === link.path
-                    ? "text-primary"
-                    : "text-foreground/80"
+                    ? "text-primary text-shadow-3d scale-105"
+                    : "text-foreground/80 hover:text-primary hover:text-shadow-3d"
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -130,10 +131,10 @@ const Header = () => {
             {isAdmin && (
               <Link
                 to="/admin"
-                className={`flex items-center gap-2 py-2 text-sm font-medium ${
+                className={`flex items-center gap-2 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                   location.pathname === "/admin"
-                    ? "text-primary"
-                    : "text-foreground/80"
+                    ? "text-primary text-shadow-3d scale-105"
+                    : "text-foreground/80 hover:text-primary hover:text-shadow-3d"
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

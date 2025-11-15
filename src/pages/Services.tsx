@@ -101,26 +101,26 @@ const Services = () => {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="animate-fade-in"
+                className="animate-fade-in perspective"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <div className="group relative bg-card rounded-2xl p-8 border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-glow overflow-hidden h-full">
+                <div className="group relative bg-card rounded-2xl p-8 border-2 border-border hover:border-primary/50 transition-all duration-300 shadow-3d hover:shadow-3d-hover overflow-hidden h-full transform hover:-translate-y-2 hover:scale-[1.02]">
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-3d">
                       <service.icon className="text-primary-foreground" size={32} />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-3xl font-bold mb-4 text-shadow-3d group-hover:text-primary transition-colors leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                    <p className="text-muted-foreground mb-6 leading-relaxed text-base">
                       {service.description}
                     </p>
                     <ul className="space-y-2">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-glow" />
                           {feature}
                         </li>
                       ))}
