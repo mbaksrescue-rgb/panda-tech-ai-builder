@@ -1,90 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PortfolioCard from "@/components/PortfolioCard";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  technologies: string[];
+  image_url: string | null;
+  live_url: string | null;
+}
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const categories = ["All", "Websites", "Software", "Mobile Apps", "Branding"];
 
-  const projects = [
-    {
-      image: "/placeholder.svg",
-      title: "E-Commerce Platform",
-      description: "Full-featured online store with payment gateway integration and inventory management",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      category: "Websites",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Restaurant Management System",
-      description: "Complete POS system with order management, inventory tracking, and reporting",
-      technologies: ["PHP", "MySQL", "JavaScript", "Bootstrap"],
-      category: "Software",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Fitness Tracking App",
-      description: "Android app for workout tracking, progress monitoring, and nutrition planning",
-      technologies: ["Android Studio", "Kotlin", "Firebase"],
-      category: "Mobile Apps",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Corporate Brand Identity",
-      description: "Complete brand package including logo, business cards, letterhead, and brand guidelines",
-      technologies: ["Adobe Illustrator", "Photoshop", "InDesign"],
-      category: "Branding",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Real Estate Website",
-      description: "Property listing platform with search filters, virtual tours, and contact forms",
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
-      category: "Websites",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "School Management System",
-      description: "Comprehensive system for student records, attendance, grades, and parent communication",
-      technologies: ["Laravel", "Vue.js", "PostgreSQL"],
-      category: "Software",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Delivery Tracking App",
-      description: "Real-time package tracking with GPS integration and customer notifications",
-      technologies: ["React Native", "Node.js", "MongoDB", "Socket.io"],
-      category: "Mobile Apps",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Tech Startup Branding",
-      description: "Modern brand identity for a SaaS company including logo, website design, and marketing materials",
-      technologies: ["Figma", "Adobe Creative Suite"],
-      category: "Branding",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Portfolio Website",
-      description: "Stunning portfolio site for a creative professional with gallery and contact features",
-      technologies: ["React", "Framer Motion", "Tailwind CSS"],
-      category: "Websites",
-      liveUrl: "#"
-    },
-  ];
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("portfolio_projects")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setProjects(data || []);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredProjects = activeCategory === "All" 
     ? projects 
     : projects.filter(project => project.category === activeCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-20">
@@ -130,11 +97,18 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project, index) => (
               <div
-                key={index}
+                key={project.id}
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <PortfolioCard {...project} />
+                <PortfolioCard 
+                  image={project.image_url || "/placeholder.svg"}
+                  title={project.title}
+                  description={project.description}
+                  technologies={project.technologies}
+                  category={project.category}
+                  liveUrl={project.live_url || undefined}
+                />
               </div>
             ))}
           </div>
