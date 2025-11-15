@@ -62,6 +62,11 @@ export default {
         'glow': 'var(--shadow-glow)',
         'glow-purple': 'var(--shadow-glow-purple)',
         'card': 'var(--shadow-card)',
+        '3d': 'var(--shadow-3d-card)',
+        '3d-hover': 'var(--shadow-3d-card-hover)',
+      },
+      textShadow: {
+        '3d': 'var(--shadow-3d-text)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -117,5 +122,23 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addUtilities }: any) {
+      addUtilities({
+        '.text-shadow-3d': {
+          textShadow: 'var(--shadow-3d-text)',
+        },
+        '.preserve-3d': {
+          transformStyle: 'preserve-3d',
+        },
+        '.perspective': {
+          perspective: '1000px',
+        },
+        '.transform-3d': {
+          transform: 'translateZ(30px)',
+        },
+      })
+    }
+  ],
 } satisfies Config;
