@@ -4,8 +4,40 @@ import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/ServiceCard";
 import PortfolioCard from "@/components/PortfolioCard";
 import heroImage from "@/assets/hero-bg.jpg";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  technologies: string[];
+  image_url: string | null;
+  live_url: string | null;
+}
 
 const Home = () => {
+  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetchFeaturedProjects();
+  }, []);
+
+  const fetchFeaturedProjects = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("portfolio_projects")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(3);
+
+      if (error) throw error;
+      setFeaturedProjects(data || []);
+    } catch (error) {
+      console.error("Error fetching featured projects:", error);
+    }
+  };
   const services = [
     {
       icon: Code,
@@ -50,33 +82,6 @@ const Home = () => {
     { icon: Users, text: "Expert Team" },
     { icon: Award, text: "Quality Code" },
     { icon: CheckCircle, text: "Full Support" },
-  ];
-
-  const featuredProjects = [
-    {
-      image: "/placeholder.svg",
-      title: "E-Commerce Platform",
-      description: "Modern online store with payment integration",
-      technologies: ["React", "Node.js", "Stripe"],
-      category: "Website",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Business Management System",
-      description: "Custom ERP system for inventory and sales",
-      technologies: ["PHP", "MySQL", "Bootstrap"],
-      category: "Software",
-      liveUrl: "#"
-    },
-    {
-      image: "/placeholder.svg",
-      title: "Mobile Banking App",
-      description: "Secure Android banking application",
-      technologies: ["Android Studio", "Java", "Firebase"],
-      category: "Mobile",
-      liveUrl: "#"
-    },
   ];
 
   return (
@@ -222,8 +227,15 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, index) => (
-              <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <PortfolioCard {...project} />
+              <div key={project.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <PortfolioCard 
+                  image={project.image_url || "/placeholder.svg"}
+                  title={project.title}
+                  description={project.description}
+                  technologies={project.technologies}
+                  category={project.category}
+                  liveUrl={project.live_url || undefined}
+                />
               </div>
             ))}
           </div>
