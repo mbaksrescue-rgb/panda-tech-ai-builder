@@ -64,6 +64,8 @@ export default {
         'card': 'var(--shadow-card)',
         '3d': 'var(--shadow-3d-card)',
         '3d-hover': 'var(--shadow-3d-card-hover)',
+        '3d-button': 'var(--shadow-3d-button)',
+        '3d-button-hover': 'var(--shadow-3d-button-hover)',
       },
       textShadow: {
         '3d': 'var(--shadow-3d-text)',
@@ -137,6 +139,18 @@ export default {
         },
         '.transform-3d': {
           transform: 'translateZ(30px)',
+        },
+        '.transform-3d-deep': {
+          transform: 'translateZ(50px) rotateX(2deg)',
+        },
+        '.transform-3d-float': {
+          transform: 'translateZ(40px) translateY(-5px)',
+        },
+        '.backface-hidden': {
+          backfaceVisibility: 'hidden',
+        },
+        '.rotate-y-180': {
+          transform: 'rotateY(180deg)',
         },
       })
     }

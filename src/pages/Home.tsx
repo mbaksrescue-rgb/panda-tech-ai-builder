@@ -42,11 +42,23 @@ interface Project {
   process_highlights: string[];
 }
 
+interface Offer {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  price: string;
+  badge_text: string;
+  button_text: string;
+}
+
 const Home = () => {
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   useEffect(() => {
     fetchFeaturedProjects();
+    fetchActiveOffer();
   }, []);
 
   const fetchFeaturedProjects = async () => {
@@ -63,6 +75,24 @@ const Home = () => {
       console.error("Error fetching featured projects:", error);
     }
   };
+
+  const fetchActiveOffer = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("offers")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') throw error;
+      setActiveOffer(data);
+    } catch (error) {
+      console.error("Error fetching active offer:", error);
+    }
+  };
+
   const services = [
     {
       icon: Code,
@@ -213,30 +243,35 @@ const Home = () => {
       </section>
 
       {/* Promotion Banner */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="relative bg-gradient-primary rounded-3xl p-12 overflow-hidden">
-            <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
-            <div className="relative z-10 text-center max-w-3xl mx-auto">
-              <span className="inline-block px-4 py-2 bg-secondary/20 rounded-full text-sm font-semibold mb-4 text-primary-foreground">
-                LIMITED OFFER
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-primary-foreground">
-                Complete Digital Package
-              </h2>
-              <p className="text-xl mb-2 text-primary-foreground/90">
-                Website + Logo + Social Media Kit
-              </p>
-              <p className="text-4xl font-bold mb-6 text-primary-foreground">
-                Only KES 15,000
-              </p>
-              <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90">
-                <Link to="/contact">Claim This Offer</Link>
-              </Button>
+      {activeOffer && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="relative bg-gradient-primary rounded-3xl p-12 overflow-hidden shadow-3d-hover transform-3d">
+              <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
+              <div className="relative z-10 text-center max-w-3xl mx-auto">
+                <span className="inline-block px-4 py-2 bg-secondary/20 rounded-full text-sm font-semibold mb-4 text-primary-foreground">
+                  {activeOffer.badge_text}
+                </span>
+                <h2 className="text-3xl md:text-5xl font-bold mb-4 text-primary-foreground text-shadow-3d">
+                  {activeOffer.title}
+                </h2>
+                <p className="text-xl mb-2 text-primary-foreground/90">
+                  {activeOffer.subtitle}
+                </p>
+                <p className="text-lg mb-4 text-primary-foreground/80">
+                  {activeOffer.description}
+                </p>
+                <p className="text-4xl font-bold mb-6 text-primary-foreground text-shadow-3d">
+                  {activeOffer.price}
+                </p>
+                <Button asChild size="lg" className="bg-background text-foreground hover:bg-background/90 shadow-3d hover:shadow-3d-hover transform hover:scale-105 transition-all">
+                  <Link to="/contact">{activeOffer.button_text}</Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Featured Projects */}
       <section className="py-20 bg-card/30">

@@ -44,6 +44,45 @@ export type Database = {
         }
         Relationships: []
       }
+      offers: {
+        Row: {
+          badge_text: string
+          button_text: string
+          created_at: string
+          description: string
+          id: string
+          is_active: boolean
+          price: string
+          subtitle: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string
+          button_text?: string
+          created_at?: string
+          description: string
+          id?: string
+          is_active?: boolean
+          price: string
+          subtitle: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string
+          button_text?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_active?: boolean
+          price?: string
+          subtitle?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       portfolio_projects: {
         Row: {
           category: string
