@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import PortfolioCard from "@/components/PortfolioCard";
+import PortfolioDetail from "@/components/PortfolioDetail";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
@@ -35,6 +35,8 @@ interface Project {
   technologies: string[];
   image_url: string | null;
   live_url: string | null;
+  process_description: string | null;
+  process_highlights: string[];
 }
 
 const Portfolio = () => {
@@ -124,13 +126,15 @@ const Portfolio = () => {
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                <PortfolioCard 
+                <PortfolioDetail 
                   image={project.image_url ? (imageMap[project.image_url] || project.image_url) : "/placeholder.svg"}
                   title={project.title}
                   description={project.description}
                   technologies={project.technologies}
                   category={project.category}
                   liveUrl={project.live_url || undefined}
+                  processDescription={project.process_description}
+                  processHighlights={project.process_highlights}
                 />
               </div>
             ))}

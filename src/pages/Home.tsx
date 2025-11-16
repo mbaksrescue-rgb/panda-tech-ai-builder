@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Code, Smartphone, Palette, Server, Mail, Shield, CheckCircle, Zap, Users, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/ServiceCard";
-import PortfolioCard from "@/components/PortfolioCard";
+import PortfolioDetail from "@/components/PortfolioDetail";
 import heroImage from "@/assets/hero-bg.jpg";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -38,6 +38,8 @@ interface Project {
   technologies: string[];
   image_url: string | null;
   live_url: string | null;
+  process_description: string | null;
+  process_highlights: string[];
 }
 
 const Home = () => {
@@ -251,13 +253,15 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, index) => (
               <div key={project.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <PortfolioCard 
+                <PortfolioDetail 
                   image={project.image_url ? (imageMap[project.image_url] || project.image_url) : "/placeholder.svg"}
                   title={project.title}
                   description={project.description}
                   technologies={project.technologies}
                   category={project.category}
                   liveUrl={project.live_url || undefined}
+                  processDescription={project.process_description}
+                  processHighlights={project.process_highlights}
                 />
               </div>
             ))}
