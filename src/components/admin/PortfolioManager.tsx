@@ -17,6 +17,8 @@ interface PortfolioProject {
   category: string;
   technologies: string[];
   live_url: string | null;
+  process_description: string | null;
+  process_highlights: string[];
 }
 
 const PortfolioManager = () => {
@@ -33,6 +35,8 @@ const PortfolioManager = () => {
     category: "",
     technologies: "",
     live_url: "",
+    process_description: "",
+    process_highlights: "",
   });
 
   useEffect(() => {
@@ -69,6 +73,8 @@ const PortfolioManager = () => {
       category: formData.category,
       technologies: formData.technologies.split(",").map((t) => t.trim()),
       live_url: formData.live_url || null,
+      process_description: formData.process_description || null,
+      process_highlights: formData.process_highlights ? formData.process_highlights.split(",").map((h) => h.trim()) : [],
     };
 
     try {
@@ -118,6 +124,8 @@ const PortfolioManager = () => {
       category: project.category,
       technologies: project.technologies.join(", "),
       live_url: project.live_url || "",
+      process_description: project.process_description || "",
+      process_highlights: project.process_highlights?.join(", ") || "",
     });
     setIsDialogOpen(true);
   };
@@ -156,6 +164,8 @@ const PortfolioManager = () => {
       category: "",
       technologies: "",
       live_url: "",
+      process_description: "",
+      process_highlights: "",
     });
     setEditingProject(null);
   };
@@ -269,6 +279,31 @@ const PortfolioManager = () => {
                     setFormData({ ...formData, live_url: e.target.value })
                   }
                   placeholder="https://..."
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="process_description">How It Was Made</Label>
+                <Textarea
+                  id="process_description"
+                  value={formData.process_description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, process_description: e.target.value })
+                  }
+                  placeholder="Explain the creation process, challenges overcome, and solutions implemented..."
+                  rows={4}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="process_highlights">Process Highlights (comma-separated)</Label>
+                <Input
+                  id="process_highlights"
+                  value={formData.process_highlights}
+                  onChange={(e) =>
+                    setFormData({ ...formData, process_highlights: e.target.value })
+                  }
+                  placeholder="Research & Planning, Design Phase, Development, Testing"
                 />
               </div>
 

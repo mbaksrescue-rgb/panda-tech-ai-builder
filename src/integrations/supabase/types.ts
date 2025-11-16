@@ -52,6 +52,8 @@ export type Database = {
           id: string
           image_url: string | null
           live_url: string | null
+          process_description: string | null
+          process_highlights: string[] | null
           technologies: string[]
           title: string
           updated_at: string
@@ -63,6 +65,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           live_url?: string | null
+          process_description?: string | null
+          process_highlights?: string[] | null
           technologies?: string[]
           title: string
           updated_at?: string
@@ -74,6 +78,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           live_url?: string | null
+          process_description?: string | null
+          process_highlights?: string[] | null
           technologies?: string[]
           title?: string
           updated_at?: string
