@@ -34,12 +34,9 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-transparent">
       {/* Hero Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <img src={techPattern} alt="" className="w-full h-full object-cover" />
-        </div>
+      <section className="py-20 relative overflow-hidden bg-transparent">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -55,7 +52,7 @@ const About = () => {
       </section>
 
       {/* Mission, Vision, Values */}
-      <section className="py-20 bg-card/30">
+      <section className="py-20 bg-transparent">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <div className="bg-card rounded-2xl p-8 border border-border hover:border-primary/50 transition-all">
