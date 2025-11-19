@@ -83,6 +83,27 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       portfolio_projects: {
         Row: {
           category: string
@@ -178,6 +199,42 @@ export type Database = {
           icon?: string
           id?: string
           title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          client_name: string
+          company: string
+          created_at: string
+          id: string
+          is_featured: boolean
+          rating: number
+          testimonial_text: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          client_name: string
+          company: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          rating: number
+          testimonial_text: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          client_name?: string
+          company?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          rating?: number
+          testimonial_text?: string
           updated_at?: string
         }
         Relationships: []

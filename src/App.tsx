@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import PWAInstallButton from "./components/PWAInstallButton";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
             </main>
             <Footer />
             <WhatsAppButton />
+            <PWAInstallButton />
           </div>
         </AuthProvider>
       </BrowserRouter>
