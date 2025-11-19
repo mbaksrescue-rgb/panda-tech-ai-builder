@@ -145,12 +145,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 z-0">
-          <img src={heroImage} alt="Hero background" className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
-        </div>
-        
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-transparent">
         <div className="container mx-auto px-4 z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -187,7 +182,7 @@ const Home = () => {
       </section>
 
       {/* Services Snapshot */}
-      <section className="py-20 relative">
+      <section className="py-20 relative bg-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -218,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-card/30">
+      <section className="py-20 bg-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -247,7 +242,7 @@ const Home = () => {
 
       {/* Promotion Banner */}
       {activeOffer && (
-        <section className="py-20">
+        <section className="py-20 bg-transparent">
           <div className="container mx-auto px-4">
             <div className="relative bg-gradient-primary rounded-3xl p-12 overflow-hidden shadow-3d-hover transform-3d">
               <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-10" />
@@ -277,7 +272,7 @@ const Home = () => {
       )}
 
       {/* Featured Projects */}
-      <section className="py-20 bg-card/30">
+      <section className="py-20 bg-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
