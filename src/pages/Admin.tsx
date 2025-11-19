@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, LayoutDashboard, Briefcase, MessageSquare, Settings, BarChart3, Tag } from "lucide-react";
+import { Loader2, LayoutDashboard, Briefcase, MessageSquare, Settings, BarChart3, Tag, MessageCircle } from "lucide-react";
 import PortfolioManager from "@/components/admin/PortfolioManager";
 import ServicesManager from "@/components/admin/ServicesManager";
 import ContactSubmissions from "@/components/admin/ContactSubmissions";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
 import SiteSettings from "@/components/admin/SiteSettings";
 import OffersManager from "@/components/admin/OffersManager";
+import TestimonialsManager from "@/components/admin/TestimonialsManager";
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -47,7 +48,7 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="analytics" className="w-full">
-          <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-grid mb-8">
+          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-grid mb-8">
             <TabsTrigger value="analytics" className="gap-2">
               <BarChart3 className="h-4 w-4" />
               Analytics
@@ -63,6 +64,10 @@ const Admin = () => {
             <TabsTrigger value="offers" className="gap-2">
               <Tag className="h-4 w-4" />
               Offers
+            </TabsTrigger>
+            <TabsTrigger value="testimonials" className="gap-2">
+              <MessageCircle className="h-4 w-4" />
+              Testimonials
             </TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2">
               <MessageSquare className="h-4 w-4" />
@@ -88,6 +93,10 @@ const Admin = () => {
 
           <TabsContent value="offers">
             <OffersManager />
+          </TabsContent>
+
+          <TabsContent value="testimonials">
+            <TestimonialsManager />
           </TabsContent>
 
           <TabsContent value="contacts">

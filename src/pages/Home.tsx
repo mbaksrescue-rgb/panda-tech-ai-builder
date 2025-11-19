@@ -3,9 +3,11 @@ import { ArrowRight, Code, Smartphone, Palette, Server, Mail, Shield, CheckCircl
 import { Button } from "@/components/ui/button";
 import ServiceCard from "@/components/ServiceCard";
 import PortfolioDetail from "@/components/PortfolioDetail";
+import Testimonials from "@/components/Testimonials";
 import heroImage from "@/assets/hero-bg.jpg";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 // Import portfolio images
 import ecommercePlatform from "@/assets/portfolio/ecommerce-platform.jpg";
@@ -53,6 +55,7 @@ interface Offer {
 }
 
 const Home = () => {
+  usePageTracking();
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
   const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
@@ -312,6 +315,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
     </div>
   );
 };

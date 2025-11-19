@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, FolderKanban, MessageSquare, TrendingUp } from "lucide-react";
+import { Briefcase, FolderKanban, MessageSquare, TrendingUp, Eye, BarChart3 } from "lucide-react";
 
 const AnalyticsDashboard = () => {
   const [stats, setStats] = useState({
@@ -9,6 +9,8 @@ const AnalyticsDashboard = () => {
     totalServices: 0,
     totalContacts: 0,
     newContacts: 0,
+    totalViews: 0,
+    todayViews: 0,
   });
 
   useEffect(() => {
@@ -38,11 +40,27 @@ const AnalyticsDashboard = () => {
         .select("*", { count: "exact", head: true })
         .eq("status", "new");
 
+      // Fetch total page views
+      const { count: totalViewsCount } = await supabase
+        .from("page_views")
+        .select("*", { count: "exact", head: true });
+
+      // Fetch today's page views
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const { count: todayViewsCount } = await supabase
+        .from("page_views")
+        .select("*", { count: "exact", head: true })
+        .gte("created_at", today.toISOString());
+
       setStats({
         totalProjects: projectCount || 0,
         totalServices: serviceCount || 0,
         totalContacts: totalContactCount || 0,
         newContacts: newContactCount || 0,
+        totalViews: totalViewsCount || 0,
+        todayViews: todayViewsCount || 0,
       });
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -78,6 +96,20 @@ const AnalyticsDashboard = () => {
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
     },
+    {
+      title: "Total Views",
+      value: stats.totalViews,
+      icon: BarChart3,
+      color: "text-indigo-500",
+      bgColor: "bg-indigo-500/10",
+    },
+    {
+      title: "Today's Views",
+      value: stats.todayViews,
+      icon: Eye,
+      color: "text-pink-500",
+      bgColor: "bg-pink-500/10",
+    },
   ];
 
   return (
@@ -89,7 +121,7 @@ const AnalyticsDashboard = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {statCards.map((stat) => {
           const Icon = stat.icon;
           return (
